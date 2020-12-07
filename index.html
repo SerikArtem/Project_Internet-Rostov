@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Интернет в Ростове</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <script type="text/javascript" src="/js/jquery-1.7.2.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css?family=Cuprum:400,700&amp;subset=cyrillic" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Condensed:400,500,700&amp;subset=cyrillic" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;subset=cyrillic" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Istok+Web:400,700&amp;subset=cyrillic" rel="stylesheet">
+    <script src="js/send_forms.js" type="text/javascript"></script>
+    <link rel="icon" href="http://internet-rostov.ru/favicon.ico" type="image/x-icon"/>
+    <link rel="shortcut icon" href="http://internet-rostov.ru/favicon.ico" type="image/x-icon"/>
+    
+    <!-- Yandex.Metrika counter --> <script type="text/javascript" > (function (d, w, c) { (w[c] = w[c] || []).push(function() { try { w.yaCounter45300816 = new Ya.Metrika({ id:45300816, clickmap:true, trackLinks:true, accurateTrackBounce:true, webvisor:true }); } catch(e) { } }); var n = d.getElementsByTagName("script")[0], s = d.createElement("script"), f = function () { n.parentNode.insertBefore(s, n); }; s.type = "text/javascript"; s.async = true; s.src = "https://mc.yandex.ru/metrika/watch.js"; if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); } })(document, window, "yandex_metrika_callbacks"); </script> <noscript><div><img src="https://mc.yandex.ru/watch/45300816" style="position:absolute; left:-9999px;" alt="" /></div></noscript> <!-- /Yandex.Metrika counter -->
+    
+    <script type="text/javascript">
+        // установим обработчик события resize (изменение размеров экрана)
+        $(window).resize(function(){   
+            $(document).ready(function() {
+                if($(document).width() >= '520'){
+                    $(".DropDown_menu").css("display", "none");
+                }
+            });
+        });
+        // вызовем событие resize
+        $(window).resize();
+        //выпадающее меню
+        $(document).ready(function(){
+            $(".mob_menu_butt").click(function(){
+                $(".DropDown_menu").slideToggle(100);
+                return false;
+            });
+        });
+        
+        //Кнопка в уголке
+        function WidthWindow(){
+            alert($(document).width());
+        }
+        
+    </script>
+    
+    <script type="text/javascript">
+        //Скрипт плавного перехода по якорям
+        $(document).ready(function() {
+            $('a[href^="#"]').click(function () {
+                $(".DropDown_menu").css("display", "none");
+                elementClick = $(this).attr("href");
+                destination = $(elementClick).offset().top;
+                if($.browser.safari){
+                    $('body').animate( { scrollTop: destination }, 500 );
+                }else{
+                    $('html').animate( { scrollTop: destination }, 500 );
+                }
+                return false;
+            });
+        });
+        
+        //Скрипт открывает/закрывает модальные окна
+        $(document).ready(function() { // зaпускaем скрипт пoсле зaгрузки всех элементoв
+            /* зaсунем срaзу все элементы в переменные, чтoбы скрипту не прихoдилoсь их кaждый рaз искaть при кликaх */
+            var overlay = $('#overlay'); // пoдлoжкa, дoлжнa быть oднa нa стрaнице
+            var open_modal = $('.open_modal'); // все ссылки, кoтoрые будут oткрывaть oкнa
+            var close = $('.modal_close, #overlay, .modal_div_IMG'); // все, чтo зaкрывaет мoдaльнoе oкнo, т.е. крестик и oверлэй-пoдлoжкa
+            var modal = $('.modal_div'); // все скрытые мoдaльные oкнa
+            var modalIMG = $('.modal_div_IMG');
+            var modalCat =$('.Cat_modal_div');
+
+            open_modal.click( function(event){ // лoвим клик пo ссылке с клaссoм open_modal
+                event.preventDefault(); // вырубaем стaндaртнoе пoведение
+                var div = $(this).attr('href'); // вoзьмем стрoку с селектoрoм у кликнутoй ссылки
+                overlay.fadeIn(300, //пoкaзывaем oверлэй
+                    function(){ // пoсле oкoнчaния пoкaзывaния oверлэя
+                    $(div) // берем стрoку с селектoрoм и делaем из нее jquery oбъект
+                        .css('display', 'block') 
+                        .animate({opacity: 1, top: '50%'}, 200); // плaвнo пoкaзывaем
+                });
+            });
+
+            close.click( function(){ // лoвим клик пo крестику или oверлэю
+            modal // все мoдaльные oкнa
+             .animate({opacity: 0, top: '45%'}, 200, // плaвнo прячем
+                 function(){ // пoсле этoгo 
+                    $(this).css('display', 'none');
+                    overlay.fadeOut(300); // прячем пoдлoжку
+                    
+                 }
+             );
+            });
+            close.click( function(){
+            modalIMG.animate({opacity: 0, top: '45%'}, 200, function(){ 
+                    $(this).css('display', 'none');
+                    overlay.fadeOut(300);
+                    
+                 }
+             );
+            });
+            close.click( function(){modalCat.animate({opacity: 0, top: '45%'}, 200, function(){ 
+                    $(this).css('display', 'none');
+                    overlay.fadeOut(300);
+                    $("#ModButt_kit").remove();
+                 }
+             );
+            });
+        });
+    </script>
+    
+    <!--Скрипт для слайдера-->
+    <script type="text/javascript">
+        (function ($) {
+        var hwSlideSpeed = 500; // Скорость анимации перехода слайда.
+        var hwTimeOut = 20000; // Время до автоматического перелистывания слайдов.
+        var hwNeedLinks = true; // Включает или отключает показ ссылок "следующий - предыдущий". Значения true или false.
+
+        $(document).ready(function(e) {
+            $('.Rev_slide').css(
+                {"position" : "absolute",
+                 "top":'0', "left": '0'}).hide().eq(0).show();
+            var slideNum = 0;
+            var slideTime;
+            slideCount = $("#Rev_slider .Rev_slide").size();
+            var animSlide = function(arrow){
+                clearTimeout(slideTime);
+                $('.Rev_slide').eq(slideNum).fadeOut(hwSlideSpeed);
+                if(arrow == "next"){
+                    if(slideNum == (slideCount-1)){slideNum=0;}
+                    else{slideNum++}
+                    }
+                else if(arrow == "prew")
+                {
+                    if(slideNum == 0){slideNum=slideCount-1;}
+                    else{slideNum-=1}
+                }
+                else{
+                    slideNum = arrow;
+                    }
+                $('.Rev_slide').eq(slideNum).fadeIn(hwSlideSpeed, rotator);
+                $(".control-slide.active").removeClass("active");
+                $('.control-slide').eq(slideNum).addClass('active');
+                }
+        if(hwNeedLinks){
+        var $linkArrow = $('<a id="prewbutton" href="#">&lt;</a><a id="nextbutton" href="#">&gt;</a>')
+            .prependTo('#Rev_slider');		
+            $('#nextbutton').click(function(){
+                animSlide("next");
+                return false;
+                })
+            $('#prewbutton').click(function(){
+                animSlide("prew");
+                return false;
+                })
+        }
+            var $adderSpan = '';
+            $('.Rev_slide').each(function(index) {
+                    $adderSpan += '<span class = "control-slide">' + index + '</span>';
+                });
+            $('<div class ="sli-links">' + $adderSpan +'</div>').appendTo('#Rev_slider-wrap');
+            $(".control-slide:first").addClass("active");
+            $('.control-slide').click(function(){
+            var goToNum = parseFloat($(this).text());
+            animSlide(goToNum);
+            });
+            var pause = false;
+            var rotator = function(){
+                    if(!pause){slideTime = setTimeout(function(){animSlide('next')}, hwTimeOut);}
+                    }
+            $('#Rev_slider-wrap').hover(	
+                function(){clearTimeout(slideTime); pause = true;},
+                function(){pause = false; rotator();
+                });
+            rotator();
+        });
+        })(jQuery);
+    </script>
+    <!--END_Скрипт для слайдера-->
+    
+</head>
+
+<body>
+    <div id="button_width" onclick="WidthWindow();"></div>
+   
+    <div class="header">
+        <div class="Head_content">
+            <div class="Head_left">
+                <a href="http://4g-rnd.ru/"><img src="img/logo_v2.jpg" alt="логотип"></a>
+            </div>
+            <div class="Head_right">
+                <div class="Head_numbers Head_float">8(800)222-63-61<div>(звонок бесплатный)</div><br/>8(928)226-0-226</div>
+                <div class="Head_butt Head_float"><a href="#modal2" class="open_modal">Заказать звонок</a></div>
+                <div style="clear:both;"></div>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+    
+    
+    <div class="Main">
+        <div class="menu">
+            <div class="menu_dop1">
+                <div class="el_menu"><a href="#advantages">Предложение</a></div>
+                <div class="el_menu"><a href="#results">Наши работы</a></div>
+                <div class="el_menu"><a href="#reviews">Отзывы</a></div>
+                <div class="el_menu"><a href="#catalog">Каталог</a></div>
+                <div class="el_menu"><a href="#stages">Этапы</a></div>
+                <div class="el_menu"><a href="#contacts">Контакты</a></div>
+                <div style="clear:both;"></div>
+            </div>
+            <div class="mob_menu_butt">
+                <div class="mob_butt_text">МЕНЮ</div>
+                <img src="img/click.png" alt="Клик">
+            </div>
+            <div class="DropDown_menu">
+                <div class="mob_el_menu"><a href="#advantages">Предложение</a></div>
+                <div class="mob_el_menu"><a href="#results">Наши работы</a></div>
+                <div class="mob_el_menu"><a href="#reviews">Отзывы</a></div>
+                <div class="mob_el_menu"><a href="#catalog">Каталог</a></div>
+                <div class="mob_el_menu"><a href="#stages">Этапы</a></div>
+                <div class="mob_el_menu"><a href="#contacts">Контакты</a></div>
+            </div>
+        </div>
+        <div class="M_textBlock">
+            <div class="offer">Высокоскоростной интернет в частный дом, дачу, сад и офис</div>
+            <div class="usp">Реальный способ повысить скорость интернета в 10-20 раз до 100 Мб/с!</div>
+        </div>
+        <form action="none">
+            <div class="M_contentForm">
+                <div class="MText">Заказать БЕСПЛАТНЫЙ тест скорости!</div>
+                <input id="MName1" class="MName placeholdAnim" placeholder="Ваше имя:"/><br/>
+                <input id="MPhone1" class="MPhone placeholdAnim" placeholder="Ваш телефон:"/>
+                <div class="MButt" onclick="Test_Speed()">ЗАКАЗАТЬ</div>
+                <div id="order_test_speed" onclick="yaCounter45300816.reachGoal('order_test_speed'); return true;"></div>
+            </div>
+        </form>
+    </div>
+    
+    
+    <div class="mob_fonForm">
+        <div class="line"></div>
+        <form action="none">
+            <div class="MMob_contentForm">
+                <div class="MText">Заказать БЕСПЛАТНЫЙ тест скорости!</div>
+                <input id="MName2" class="MName placeholdAnim" placeholder="Ваше имя:"/><br/>
+                <input id="MPhone2" class="MPhone placeholdAnim" placeholder="Ваш телефон:"/>
+                <div class="MButt" onclick="Test_Speed_Mob()">ЗАКАЗАТЬ</div>
+                <div id="order_ts_mob" onclick="yaCounter45300816.reachGoal('order_ts_mob'); return true;"></div>
+            </div>
+        </form>
+    </div>
+    
+    
+    <div class="advantages">
+        <div id="advantages" class="Adv_head">Вам знакомы эти проблемы?</div>
+        <div class="Adv_content">
+            <div class="Adv_1 Adv_float">
+                <div class="Adv_number">
+                    <div class="Adv_number_dop">01</div>
+                </div>
+                <div class="Adv_img">
+                    <img src="img/Adv_img_1.png" alt="усиливает">
+                </div>
+                <div class="Adv_text">Невозможно посмотреть видео и скачать файлы?</div>
+            </div>
+            
+            <div class="Adv_arrow1 Adv_float"></div>
+            
+            <div class="Adv_2 Adv_float">
+                <div class="Adv_number">
+                    <div class="Adv_number_dop">02</div>
+                </div>
+                <div class="Adv_img">
+                    <img src="img/Adv_img_2.png" alt="скорость">
+                </div>
+                <div class="Adv_text">Медленно открываются сайты?</div>
+            </div>
+            
+            <div class="Adv_arrow2 Adv_float"></div>
+            
+            <div class="Adv_3 Adv_float">
+                <div class="Adv_number">
+                    <div class="Adv_number_dop">03</div>
+                </div>
+                <div class="Adv_img">
+                    <img src="img/Adv_img_3.png" alt="перебои">
+                </div>
+                <div class="Adv_text">Частые перебои в сетевом соединении?</div>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+    </div>
+    
+    
+    <div class="decision">
+        <div class="Dec_arrow"></div>
+        <div class="Dec_head">Мы поможем решить проблемы с некачественным интернетом!</div>
+        <div class="Dec_content">
+
+                <div class="Dec_text">
+                    <div class="Dec_head_text">Что мы предлагаем?</div>
+                    <ol class="Dec_list">
+                        <li>Высокоскоростной интернет для жителей частного сектора.</li>
+                        <li>Стабильный и качественный доступ к сети без перебоев.</li>
+                        <li>Невысокая стоимость оборудования для подключения.</li>
+                        <li>Современные технологии и качественные материалы.</li>
+                        <li>Идеальное общение по видеосвязи Skype WhatsApp, Viber и др.</li>
+                        <li>Быстрый серфинг на любых сайтах , игры, фильмы и музыка без зависания.</li>
+                        <li>Отзывчивая бесплатная служба технической поддержки.</li>
+                    </ol>
+                </div>
+
+            
+        </div>
+    </div>
+   
+   
+    <div class="confidence">
+        <div class="Con_head">Почему нам доверяют?</div>
+        <div class="Con_content">
+           
+            <div class="Con_div Con_float">
+                <div class="Con_img">
+                    <img src="img/Con_img_1.png" alt="интернет везде">
+                </div>
+                <div class="Con_text">Готовое решение для частного сектора - подключим интернет даже там, где не могут другие</div>
+            </div>
+            
+            <div class="Con_arrow Con_float"></div>
+            
+            <div class="Con_div Con_float">
+                <div class="Con_img">
+                    <img src="img/Con_img_2.png" alt="гарантия">
+                </div>
+                <div class="Con_text">Гарантия 1 год на оборудование и на бесперебойную работу высокоскоростного интернета</div>
+            </div>
+            
+            <div class="Con_arrow Con_float"></div>
+            
+            <div class="Con_div Con_float">
+                <div class="Con_img">
+                    <img src="img/Con_img_3.png" alt="опытные инженеры">
+                </div>
+                <div class="Con_text">Квалифицированные инженеры-монтажники и опыт работы компании более 5 лет</div>
+            </div>
+            
+            <div class="Con_arrow Con_float"></div>
+            
+            <div class="Con_div Con_float">
+                <div class="Con_img">
+                    <img src="img/Con_img_4.png" alt="качество оборудования">
+                </div>
+                <div class="Con_text">Качественное оборудование и расходные материалы высокого качества</div>
+            </div>
+            
+            <div style="clear:both;"></div>
+            
+        </div>
+    </div>
+    
+    
+    <div class="structure">
+        <div class="Str_head">А ещё...</div>
+        <div class="Str_content"></div>
+        <div class="Str_mob">
+            <div class="StrM_block">
+                <div class="StrM_number Str_float">1</div>
+                <div class="StrM_text StrM_text1 Str_float">Наша антенна имеет независимые элементы на каждую поляризацию, что позволяет достичь максимальной скорости.</div>
+                <div style="clear:both;"></div>
+            </div>
+            <div class="StrM_block">
+                <div class="StrM_number Str_float">2</div>
+                <div class="StrM_text StrM_text2 Str_float">Герметический корпус антенны позволяет быть устойчивой к любым погодным условиям.</div>
+                <div style="clear:both;"></div>
+            </div>
+            <div class="StrM_block">
+                <div class="StrM_number Str_float">3</div>
+                <div class="StrM_text StrM_text3 Str_float">Каждый антенный элемент работает, как на прием, так и на передачу.</div>
+                <div style="clear:both;"></div>
+            </div>
+            <div class="StrM_block">
+                <div class="StrM_number Str_float">4</div>
+                <div class=" StrM_text StrM_text4 Str_float">Качественный коаксиальный кабель служит для изоляции и защиты от внешних воздействий.</div>
+                <div style="clear:both;"></div>
+            </div>
+            <div class="StrM_block">
+                <div class="StrM_number Str_float">5</div>
+                <div class="StrM_text StrM_text5 Str_float">Максимальное соответствие антенны к USB-модему.</div>
+                <div style="clear:both;"></div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <div class="form2">
+        <form action="none">
+            <div class="F2_content">
+                <div class="F2_text">Мы будем рады ответить на Ваши вопросы:</div>
+                <div class="F2_name_phone">
+                    <input class="F2_name F2_float placeholdAnim" placeholder="Ваше имя:"/>
+                    <input class="F2_phone F2_float placeholdAnim" placeholder="Ваш телефон:"/>
+                    <div style="clear:both;"></div>
+                </div>
+                <div class="F2_butt" onclick="CallOrder_question();">Заказать звонок</div>
+                <div id="form_before_results" onclick="yaCounter45300816.reachGoal('form_before_results'); return true;"></div>
+            </div>
+        </form>
+    </div>
+    
+    
+    <div class="results">
+        <div id="results" class="Res_head">Результат наших работ</div>
+        <div class="Res_content">
+           
+            <div class="Res_left Res_float1">
+                <div class="Res_img">
+                    <div class="Res_img1 Res_float2"><img href="#modal_IMG1" class="open_modal" src="img/Res1_mini.jpg" alt="результат"></div>
+                    <div class="Res_img2 Res_float2"><img href="#modal_IMG11" class="open_modal" src="img/Res11_mini.jpg" alt="результат"></div>
+                    <div style="clear:both;"></div>
+                </div>
+                <div class="Res_text"><span class="Res_span">Город:</span> Ростов-на-Дону<br/><span class="Res_span">Район/Улица:</span> Пролетарский р-н<br/><span class="Res_span">Результат:</span> 43,10 Мб/с</div>
+                <a href="#modal3" class="Res_butt open_modal">Хочу так же</a>
+            </div>
+            <div class="Res_right Res_float1">
+                <div class="Res_img">
+                    <div class="Res_img1 Res_float2"><img href="#modal_IMG2" class="open_modal" src="img/Res2_mini.jpg" alt="результат"></div>
+                    <div class="Res_img2 Res_float2"><img href="#modal_IMG22" class="open_modal" src="img/Res22_mini.jpg" alt="результат"></div>
+                    <div style="clear:both;"></div>
+                </div>
+                <div class="Res_text"><span class="Res_span">Город:</span> Ростов-на-Дону<br/><span class="Res_span">Район/Улица:</span> Советский район<br/><span class="Res_span">Результат:</span> 54,04 Мб/с</div>
+                <a href="#modal3" class="Res_butt open_modal">Хочу так же</a>
+            </div>
+            <div style="clear:both;"></div>
+            
+            
+            <div class="Res_left Res_float1">
+                <div class="Res_img">
+                    <div class="Res_img1 Res_float2"><img href="#modal_IMG3" class="open_modal" src="img/Res3_mini.jpg" alt="результат"></div>
+                    <div class="Res_img2 Res_float2"><img href="#modal_IMG33" class="open_modal" src="img/Res33_mini.jpg" alt="результат"></div>
+                    <div style="clear:both;"></div>
+                </div>
+                <div class="Res_text"><span class="Res_span">Город:</span> Ростов-на-Дону<br/><span class="Res_span">Район/Улица:</span> ул.Прибалтийская<br/><span class="Res_span">Результат:</span> 48,26 Мб/с</div>
+                <a href="#modal3" class="Res_butt open_modal">Хочу так же</a>
+            </div>
+            <div class="Res_right Res_float1">
+                <div class="Res_img">
+                    <div class="Res_img1 Res_float2"><img href="#modal_IMG4" class="open_modal" src="img/Res4_mini.jpg" alt="результат"></div>
+                    <div class="Res_img2 Res_float2"><img href="#modal_IMG44" class="open_modal" src="img/Res44_mini.jpg" alt="результат"></div>
+                    <div style="clear:both;"></div>
+                </div>
+                <div class="Res_text"><span class="Res_span">Город:</span> Ростов-на-Дону<br/><span class="Res_span">Район/Улица:</span> Ростовское море<br/><span class="Res_span">Результат:</span> 31,45 Мб/с</div>
+                <a href="#modal3" class="Res_butt open_modal">Хочу так же</a>
+            </div>
+            <div style="clear:both;"></div>
+            
+        </div>
+    </div>
+    
+    
+    <div class="F3_main">
+        <div class="F3_text1">
+            Хотите таких же результатов?
+        </div>
+        <div class="F3_text2">
+            Заполните форму ниже и мы свяжемся с Вами для обсуждения деталей:
+        </div>
+        <div class="form3">
+            <form action="none">
+                <div class="F3_content">
+                    <div class="F3_name_phone">
+                        <input class="F3_name F3_float placeholdAnim" placeholder="Ваше имя:"/>
+                        <input class="F3_phone F3_float placeholdAnim" placeholder="Ваш телефон:"/>
+                        <div style="clear:both;"></div>
+                    </div>
+                    <div class="F3_butt"  onclick="WantThis_res_form();">Заказать звонок</div>
+                    <div id="form_after_result" onclick="yaCounter45300816.reachGoal('form_after_result'); return true;"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
+    <div class="reviews">
+        <div id="reviews" class="Rev_head">Отзывы наших довольных клиентов</div>
+        <div id="Rev_slider-wrap">
+            <div id="Rev_slider">
+               
+                <div class="Rev_slide">
+                    <div class="Rev_img Rev_float">
+                        <img src="img/Rev_client1.png" alt="фото клиента">
+                    </div>
+                    <div class="Rev_text Rev_float">
+                        <div class="Rev_text1"><span class="Rev_span1">Александр</span><br/><span class="Rev_span2">21 мая 2017, г.Ростов-на-Дону</span></div>
+                        <div class="Rev_text2">"Я построил дом на Ростовском море и уже проводил всю внутреннюю проводку, заранее решил подумать и об интернете. Чтобы потом нигде не торчали лишние провода. Так вот обратился в эту компанию, ребята все установили, помогли мне сделать разбивку по этажам, поставили дополнительно роутер на 1-й этаж и протянули везде аккуратно интернет провод и сделали даже 2 розетки с проводным выходом интернета рядом с телевизорами. Спасибо Вам огромное за профессиональную и аккуратную работу."</div>
+                    </div>
+                </div>
+                <div class="Rev_slide">
+                    <div class="Rev_img Rev_float">
+                        <img src="img/Rev_client2.png" alt="фото клиента">
+                    </div>
+                    <div class="Rev_text Rev_float">
+                        <div class="Rev_text1"><span class="Rev_span1">Артур</span><br/><span class="Rev_span2">27 марта 2017, г.Батайск</span></div>
+                        <div class="Rev_text2">"Мы с семьей ждали, что у нас в Батайске проведут оптику, но когда уже прошло уже пол года и взвесив все плюсы и минусы, мы решили поискать, кто в интернете занимается именно беспроводным по частному сектору. Скажу сразу цены в сравнении по Ростову у них низкие. А интернет уже как 2 месяца установили и все отлично работает, никаких нареканий."</div>
+                    </div>
+                </div>
+                <div class="Rev_slide">
+                    <div class="Rev_img Rev_float">
+                        <img src="img/Rev_client3.png" alt="фото клиента">
+                    </div>
+                    <div class="Rev_text Rev_float">
+                        <div class="Rev_text1"><span class="Rev_span1">Виктор</span><br/><span class="Rev_span2">7 апреля 2017, г.Азов</span></div>
+                        <div class="Rev_text2">"Спасибо большое ребятам. Обращаюсь уже во второй раз, установили они мне антенну еще до Нового Года, но сейчас мы захотели перейти на МТС. И они по звонку приехали, все заново настроили, направили антенну и мы получили скорость 45-47 мб/с. Просто до этого у нас была только вышка Мегафон не подалеку. А потом узнали что установили уже новую."</div>
+                    </div>
+                </div>
+                <div class="Rev_slide">
+                    <div class="Rev_img Rev_float">
+                        <img src="img/Rev_client4.png" alt="фото клиента">
+                    </div>
+                    <div class="Rev_text Rev_float">
+                        <div class="Rev_text1"><span class="Rev_span1">Ольга</span><br/><span class="Rev_span2">14 марта 2017, пос.Дарьевка</span></div>
+                        <div class="Rev_text2">"Я живу в поселке Дарьевка Ростовской области. Интернета у нас можно сказать не было вообще. Модем 3G работал через раз еле-еле. Оставили заявку на этом сайте, через 20 минут с нами связался вежливый парень и мы договорились на встречу. Так как 4G вышка от нас была далеко, ребята установили антенну помощнее. Долго бедные пытались найти максимальную скорость и направление антенны. Так как вышек было рядом очень много, но все они работали на 3G. Сейчас хоть не сильно большая скорость, но стабильный интернет есть всегда."</div>        
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+           
+       
+    <div class="F4_main">
+        <div class="F4_text1">
+            Хотите войти в число наших довольных клиентов?
+        </div>
+        <div class="F4_text2">
+            Просто заполните форму, мы Вам перезвоним и обсудим все детали:
+        </div>
+        <div class="form4">
+            <form action="none">
+                <div class="F4_content">
+                    <div class="F4_name_phone">
+                        <input class="F4_name F4_float placeholdAnim" placeholder="Ваше имя:"/>
+                        <input class="F4_phone F4_float placeholdAnim" placeholder="Ваш телефон:"/>
+                        <div style="clear:both;"></div>
+                    </div>
+                    <div class="F4_butt" onclick="CallOrder_reviews()">Заказать звонок</div>
+                    <div id="form_after_reviews" onclick="yaCounter45300816.reachGoal('form_after_reviews'); return true;"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+  
+  
+    <div class="catalog">
+       
+        <div id="catalog" class="Cat_head">Каталог комплектов</div>
+        
+        <div class="Cat_operators">
+            <div class="Cat_op_text">Мы работаем со всеми операторами</div>
+            <div class="Cat_op_img1"><img src="img/Operators.png" alt="операторы"></div>
+            <div class="Cat_op_img2"><img src="img/Operators_mob.png" alt="операторы"></div>
+        </div> 
+
+        <div class="Cat_action">
+            <div class="Cat_act_cont">
+                <div class="CatA_kits">
+                    <div class="CatA_head_text">Комплект по АКЦИИ</div>
+                    <div class="CatA_img"><img href="#modal_IMG5" class="open_modal" src="img/CatSale_mini.jpg" alt="Комплект по акции"></div>
+                    <div class="CatA_text">При заказе у нас полного комплекта для установки с усиленной антенной в 16Дб, в подарок от нашей компании Wi-Fi роутер переносной.</div>
+                    <div class="CatA_price">12 900 руб.</div>
+                    <div href="#modal6" class="CatA_MButt open_modal" onclick="Distribute_modalA('Kit_sale');">ЗАКАЗАТЬ</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="Cat_cont">
+            <div class="Cat_kits Cat_float1">
+                <div class="Cat_head_text1">Комплект №1</div>
+                <div class="Cat_img1"><img href="#modal_IMG6" class="open_modal" src="img/Cat12_mini.jpg" alt="Комплект №1"></div>
+                <div class="Cat_text1">В комплект входит:<br/>✔Антенна MIMO 12Дб<br/>✔Кронштейн<br/>✔2 пигтейла crs9<br/>✔2 кабеля по 10м</div>
+                <div class="Cat_price1">4 800 руб.</div>
+                <div href="#modal5" class="Cat_MButt open_modal" onclick="Distribute_modal('Kit_1');">ЗАКАЗАТЬ</div>
+            </div>
+            <div id="Cat_flag" class="Cat_kits Cat_float1">
+                <div class="CatA_head_text">Комплект по АКЦИИ</div>
+                <div class="CatA_img"><img href="#modal_IMG5" class="open_modal" src="img/CatSale_mini.jpg" alt="Комплект по акции"></div>
+                <div class="CatA_text">При заказе у нас полного комплекта для установки с усиленной антенной в 16Дб, в подарок от нашей компании Wi-Fi роутер переносной. </div>
+                <div class="CatA_price">12 900 руб.</div>
+                <div href="#modal6" class="CatA_MButt open_modal" onclick="Distribute_modalA('Kit_sale');">ЗАКАЗАТЬ</div>
+            </div>
+            <div class="Cat_kits Cat_float1">
+                <div class="Cat_head_text1">Комплект №2</div>
+                <div class="Cat_img1"><img href="#modal_IMG7" class="open_modal" src="img/Cat14_mini.jpg" alt="Комплект №2"></div>
+                <div class="Cat_text1">В комплект входит:<br/>✔Антенна MIMO 14Дб<br/>✔Кронштейн<br/>✔2 пигтейла crs9<br/>✔2 кабеля по 10м</div>
+                <div class="Cat_price1">5 400 руб.</div>
+                <div href="#modal5" class="Cat_MButt open_modal" onclick="Distribute_modal('Kit_2');">ЗАКАЗАТЬ</div>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        
+        <div class="Cat_cont2">
+            <div class="Cat_kits Cat_float1">
+                <div class="Cat_head_text1">Комплект №3</div>
+                <div class="Cat_img1"><img href="#modal_IMG8" class="open_modal" src="img/Cat15_mini.jpg" alt="Комплект №3"></div>
+                <div class="Cat_text1">В комплект входит:<br/>✔Антенна MIMO 15Дб<br/>✔Кронштейн<br/>✔2 пигтейла crs9<br/>✔2 кабеля по 10м</div>
+                <div class="Cat_price1">6 000 руб.</div>
+                <div href="#modal5" class="Cat_MButt open_modal" onclick="Distribute_modal('Kit_3');">ЗАКАЗАТЬ</div>
+            </div>
+            <div class="Cat_kits Cat_float1">
+                <div class="Cat_head_text1">Комплект #4</div>
+                <div class="Cat_img1"><img href="#modal_IMG9" class="open_modal" src="img/Cat16_mini.jpg" alt="Комплект №4"></div>
+                <div class="Cat_text1">В комплект входит:<br/>✔Антенна MIMO 16Дб<br/>✔Кронштейн<br/>✔2 пигтейла crs9<br/>✔2 кабеля по 10м</div>
+                <div class="Cat_price1">6 500 руб.</div>
+                <div href="#modal5" class="Cat_MButt CatA_MButt open_modal" onclick="Distribute_modal('Kit_4');">ЗАКАЗАТЬ</div>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        <div class="Cat_text4">Установка любого комплекта <b>1500 руб.</b></div>
+        <div class="Cat_text3">Дополнительное оборудование к комплектам:</div>
+        
+        <div class="Cat_DopCont">
+            <div class="Cat_DopKits Cat_float2">
+                <div class="Cat_head_text2">Wi-Fi роутер</div>
+                <div class="Cat_img2"><img href="#modal_IMG10" class="open_modal" src="img/CatRout_mini.jpg" alt="Доп. оборудование"></div>
+                <div class="Cat_text2"></div>
+                <div class="Cat_price2">3 500 руб.</div>
+            </div>
+            <div class="Cat_DopKits Cat_float2">
+                <div class="Cat_head_text2">Модем 4G</div>
+                <div class="Cat_img2"><img href="#modal_IMG111" class="open_modal" src="img/CatMod_mini.jpg" alt="Доп. оборудование"></div>
+                <div class="Cat_text2"></div>
+                <div class="Cat_price2">1 900 руб.</div>
+            </div>
+            <div class="Cat_DopKits Cat_float2">
+                <div class="Cat_head_text2">Переносной Wi-Fi роутер</div>
+                <div class="Cat_img2"><img href="#modal_IMG12" class="open_modal" src="img/CatRoutMob_mini.jpg" alt="Доп. оборудование"></div>
+                <div class="Cat_text2"></div>
+                <div class="Cat_price2">2 300 руб.</div>
+            </div>
+            <div style="clear:both;"></div>
+        </div>
+        
+        
+    </div>
+  
+  
+    <!--Форма 6 (по стилям форы 4)-->
+    <div class="F6_text1">
+        Если Вам необходима консультация, заполните форму ниже и мы Вам перезвоним:
+    </div>
+    <div class="form4">
+        <form action="none">
+            <div class="F4_content">
+                <div class="F4_name_phone">
+                    <input class="F4_name F6_name F4_float placeholdAnim" placeholder="Ваше имя:"/>
+                    <input class="F4_phone F6_phone F4_float placeholdAnim" placeholder="Ваш телефон:"/>
+                    <div style="clear:both;"></div>
+                </div>
+                <div class="F4_butt" onclick="WantOrder_cons();">Заказать звонок</div>
+                <div id="form_after_catalog" onclick="yaCounter45300816.reachGoal('form_after_catalog'); return true;"></div>
+            </div>
+        </form>
+    </div>
+    
+    
+    <div class="stages">
+        <div id="stages" class="Sta_head">Этапы работы</div>
+        <div class="Sta_content">
+           
+            <div class="Sta_div Sta_float">
+                <div class="Sta_img">
+                    <img src="img/Sta_img1.png" alt="обращение">
+                </div>
+                <div class="Sta_text"><span class="Sta_span">Обращение</span><br/><br/>Принимаем заявку, отвечаем на предварительные вопросы, согласовываем время встречи.</div>
+            </div>
+            
+            <div class="Sta_arrow Sta_float"></div>
+            
+            <div class="Sta_div Sta_float">
+                <div class="Sta_img">
+                    <img src="img/Sta_img2.png" alt="выезд инженера">
+                </div>
+                <div class="Sta_text"><span class="Sta_span">Выезд инженера-монтажника</span><br/><br/>К вам приезжает инженер-монтажник для замера уровня приема сигнала и поиска оптимального места для расположения оборудования.</div>
+            </div>
+            
+            <div class="Sta_arrow Sta_float"></div>
+            
+            <div class="Sta_div Sta_float">
+                <div class="Sta_img">
+                    <img src="img/Sta_img3.png" alt="монтаж">
+                </div>
+                <div class="Sta_text"><span class="Sta_span">Монтаж и настройка</span><br/><br/>Инженер монтирует и настраивает антенну так, чтобы скорость была максимальной.</div>
+            </div>
+            
+            <div class="Sta_arrow Sta_float"></div>
+            
+            <div class="Sta_div Sta_float">
+                <div class="Sta_img">
+                    <img src="img/Sta_img4.png" alt="готовый проект">
+                </div>
+                <div class="Sta_text"><span class="Sta_span">Готовый проект</span><br/><br/>Инженер демонстрирует достигнутую скорость и выдает гарантийный талон.</div>
+            </div>
+            
+            <div class="Sta_arrow Sta_float"></div>
+            
+            <div class="Sta_div Sta_float">
+                <div class="Sta_img">
+                    <img src="img/Sta_img5.png" alt="быстрый интернет">
+                </div>
+                <div class="Sta_text"><span class="Sta_span">Быстрый интернет</span><br/><br/>Теперь у вас дома интернет со скоростью до 100Мб/с.</div>
+            </div>
+            
+            <div style="clear:both;"></div>
+            
+        </div>
+    </div>
+    
+    
+    <div id="main_form" class="F5_main">
+        <div class="F5_text1">
+            Хотите быстрый интернет? Без тормозов и перебоев?
+        </div>
+        <div class="F5_text2">
+            Тогда заполните форму ниже и наши специалисты свяжуться с Вами для обсуждения всех деталей:
+        </div>
+        <div class="form5">
+            <form action="none">
+                <div class="F5_content">
+                    <div class="F5_name_phone">
+                        <input class="F5_name F5_float placeholdAnim" placeholder="Ваше имя:"/>
+                        <input class="F5_phone F5_float placeholdAnim" placeholder="Ваш телефон:"/>
+                        <div style="clear:both;"></div>
+                    </div>
+                    <div class="F5_butt" onclick="MainFORM()">Заказать звонок</div>
+                    <div id="main_form_funnel" onclick="yaCounter45300816.reachGoal('main_form_funnel'); return true;"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
+    <div id="contacts" class="contacts">
+        <div class="Cont_text_mob">
+            <div class="Cont_text1_mob">Наши контакты</div>
+            <div class="Cont_text2_mob"><img src="img/Cont_img1.png" alt="тел.1"> 8(800)222-63-61 <span>(звонок бесплатный)</span></div>
+            <div class="Cont_text3_mob"><img src="img/Cont_img1.png" alt="тел.2"> 8(928)226-0-226</div>
+            <div class="Cont_text4_mob"><img src="img/Cont_img2.png" alt="адрес"> Ростов-на-Дону, ул.Московская, д.63, офис 324</div>
+            <div class="Cont_text5_mob">ИНН: 6167085228<br/>ОГРНИП: 1066167017982</div>
+        </div>
+        <div class="Cont_maps">
+            <script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A0206b24782352b14dcacda1784fe0a76f802e87e796f7f15129cb04e077b20fa&amp;width=100%25&amp;height=550&amp;lang=ru_RU&amp;scroll=true"></script>
+        </div>
+        <div class="Cont_text">
+            <div class="Cont_text1">Наши контакты</div>
+            <div class="Cont_text2"><img src="img/Cont_img1.png" alt="тел.1"> 8(800)222-63-61 <span>(звонок бесплатный)</span></div>
+            <div class="Cont_text3"><img src="img/Cont_img1.png" alt="тел.2"> 8(928)226-0-226</div>
+            <div class="Cont_text4"><img src="img/Cont_img2.png" alt="адрес"> Ростов-на-Дону, ул.Московская, д.63, офис 324</div>
+            <div class="Cont_text5">ИНН: 6167085228<br/>ОГРНИП: 1066167017982</div>
+        </div>
+    </div>
+    
+    
+    <div class="footer">
+        <div class="Foo_content">
+            <div class="Foo_left">
+                <a href="http://4g-rnd.ru/"><img src="img/logo_v2.jpg" alt="логотип"></a>
+            </div>
+            <div class="Foo_right">
+                <div class="Foo_numbers Foo_float">8(800)222-63-61<div>(звонок бесплатный)</div><br/>8(928)226-0-226</div>
+                <div class="Foo_butt Foo_float"><a href="#modal4" class="open_modal">Заказать звонок</a></div>
+                <div style="clear:both;"></div>
+            </div>
+            <div style="clear:both;"></div>
+            <div class="Foo_copyright">Copyright © 4G-RND 2017<br/>Все права защищены</div>
+        </div>
+    </div>
+    
+    
+    <!--  Модальные окна  -->
+    <div id="modal1" class="modal_div">
+        <div id="mod1_dop">
+	        <img class="modal_close" src="img/close_modal.png" alt="закрыть">
+            <div class="M1_info">Спасибо!<br/><br/>Мы перезвоним Вам в течении 20 минут!</div>
+        </div>
+    </div>
+    
+    
+    <div id="modal2" class="modal_div">
+        <div id="mod2_dop">
+            <img class="modal_close" src="img/close_modal.png" alt="закрыть">
+            <div class="M2_info">Спасибо!<br/><br/>Мы перезвоним Вам в течении 20 минут!</div>
+            <form id="send_header">
+                <div class="Mod_contentForm">
+                    <input type="text" class="formTxtPole Mod2_Name ModName placeholdAnim" placeholder="Ваше имя:"/><br/>
+                    <input type="text" class="formTxtPole Mod2_Phone ModPhone placeholdAnim" placeholder="Ваш телефон:"/>
+                    <div class="ModButt" onclick="CallOrder_header()">Заказать звонок</div>
+                    <div id="order_call_header" onclick="yaCounter45300816.reachGoal('order_call_header'); return true;"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
+    <div id="modal3" class="modal_div">
+        <div id="mod3_dop">
+            <img class="modal_close" src="img/close_modal.png" alt="закрыть">
+            <div class="M3_info">Спасибо!<br/><br/>Мы перезвоним Вам в течении 20 минут!</div>
+            <form id="send_result">
+                <div class="Mod_contentForm">
+                    <input type="text" class="formTxtPole Mod3_Name ModName placeholdAnim" placeholder="Ваше имя:"/><br/>
+                    <input type="text" class="formTxtPole Mod3_Phone ModPhone placeholdAnim" placeholder="Ваш телефон:"/>
+                    <div class="ModButt" onclick="WantThis_result()">Заказать звонок</div>
+                    <div id="want_this_result" onclick="yaCounter45300816.reachGoal('want_this_result'); return true;"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
+    <div id="modal4" class="modal_div">
+        <div id="mod4_dop">
+            <img class="modal_close" src="img/close_modal.png" alt="закрыть">
+            <div class="M4_info">Спасибо!<br/><br/>Мы перезвоним Вам в течении 20 минут!</div>
+            <form id="send_footer">
+                <div class="Mod_contentForm">
+                    <input type="text" class="formTxtPole Mod4_Name ModName placeholdAnim" placeholder="Ваше имя:"/><br/>
+                    <input type="text" class="formTxtPole Mod4_Phone ModPhone placeholdAnim" placeholder="Ваш телефон:"/>
+                    <div class="ModButt" onclick="CallOrder_footer()">Заказать звонок</div>
+                    <div id="order_call_footer" onclick="yaCounter45300816.reachGoal('order_call_footer'); return true;"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!--  Модальное окно для раздела "Каталог комплектов"  -->
+    <div id="modal5" class="Cat_modal_div">
+        <div id="mod5_dop">
+            <img class="modal_close" src="img/close_modal.png" alt="закрыть">
+            <div class="Cat_info">Спасибо!<br/><br/>Мы перезвоним Вам в течении 20 минут!</div>
+            <form id="send_kit">
+                <div id="ModKit_cont" class="Mod_contentForm">
+                    <input type="text" name="name" class="formTxtPole Mod5_Name ModName placeholdAnim" placeholder="Ваше имя:"/><br/>
+                    <input type="text" name="phone" class="formTxtPole Mod5_Phone ModPhone placeholdAnim" placeholder="Ваш телефон:"/><br/>
+                    <div>Дополнтельное оборудование и услуги:</div>
+                    <input type="checkbox" class="formCheckbox" name="wifi" value="- wi-Fi роутер (2700 руб.)" /><span>Wi-Fi роутер (<b>2 700 руб.</b>)</span><br/>
+                    <input type="checkbox" class="formCheckbox" name="modem" value="- модем 4G (1900 руб.)" /><span>Модем 4G (<b>1 900 руб.</b>)</span><br/>
+                    <input type="checkbox" class="formCheckbox" name="install" value="- установка комплекта (1500 руб.)" /><span>Установка комплекта (<b>1 500 руб.</b>)</span><br/>
+                    <div id="order_kit" onclick="yaCounter45300816.reachGoal('order_kit'); return true;"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div id="modal6" class="Cat_modal_div">
+        <div id="mod5_dop">
+            <img class="modal_close" src="img/close_modal.png" alt="закрыть">
+            <div class="Cat_info">Спасибо!<br/><br/>Мы перезвоним Вам в течении 20 минут!</div>
+            <form id="send_kitA">
+                <div id="ModKit_cont2" class="Mod_contentForm">
+                    <input type="text" name="name" class="formTxtPole Mod6_Name ModName placeholdAnim" placeholder="Ваше имя:"/><br/>
+                    <input type="text" name="phone" class="formTxtPole Mod6_Phone ModPhone placeholdAnim" placeholder="Ваш телефон:"/><br/>
+                    <div>Дополнтельная услуга:</div>
+                    <input type="checkbox" class="formCheckbox" name="install" value="- установка комплекта (1500 руб.)" /><span>Установка комплекта (<b>1 500 руб.</b>)</span><br/>
+                    <div id="order_kit_action" onclick="yaCounter45300816.reachGoal('order_kit_action'); return true;"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    
+    <!--  Модальные окна для изображений "Результаты наших работ"-->
+    
+    <div id="modal_IMG1" class="modal_div_IMG">
+            <img src="img/Res1_maxi.jpg" alt="пример работы">
+    </div>
+    
+    <div id="modal_IMG2" class="modal_div_IMG">
+            <img src="img/Res2_maxi.jpg" alt="пример работы">
+    </div>
+    
+    <div id="modal_IMG3" class="modal_div_IMG">
+            <img src="img/Res3_maxi.jpg" alt="пример работы">
+    </div>
+    
+    <div id="modal_IMG4" class="modal_div_IMG">
+            <img src="img/Res4_maxi.jpg" alt="пример работы">
+    </div>
+    
+    
+    <div id="modal_IMG11" class="modal_div_IMG">
+            <img src="img/Res11_maxi.jpg" alt="пример работы">
+    </div>
+    
+    <div id="modal_IMG22" class="modal_div_IMG">
+            <img src="img/Res22_maxi.jpg" alt="пример работы">
+    </div>
+    
+    <div id="modal_IMG33" class="modal_div_IMG">
+            <img src="img/Res33_maxi.jpg" alt="пример работы">
+    </div>
+    
+    <div id="modal_IMG44" class="modal_div_IMG">
+            <img src="img/Res44_maxi.jpg" alt="пример работы">
+    </div>
+    
+    
+    <!--  Модальные окна для изображений "Результаты наших работ"-->
+    <div id="modal_IMG5" class="modal_div_IMG">
+            <img src="img/CatSale_maxi.jpg" alt="комплект">
+    </div>
+    
+    <div id="modal_IMG6" class="modal_div_IMG">
+            <img src="img/Cat12_maxi.jpg" alt="комплект">
+    </div>
+    
+    <div id="modal_IMG7" class="modal_div_IMG">
+            <img src="img/Cat14_maxi.jpg" alt="комплект">
+    </div>
+    
+    <div id="modal_IMG8" class="modal_div_IMG">
+            <img src="img/Cat15_maxi.jpg" alt="комплект">
+    </div>
+    
+    <div id="modal_IMG9" class="modal_div_IMG">
+            <img src="img/Cat16_maxi.jpg" alt="комплект">
+    </div>
+    
+    <div id="modal_IMG10" class="modal_div_IMG">
+            <img src="img/CatRout_maxi.jpg" alt="оборудование">
+    </div>
+    
+    <div id="modal_IMG111" class="modal_div_IMG">
+            <img src="img/CatMod_maxi.jpg" alt="оборудование">
+    </div>
+    
+    <div id="modal_IMG12" class="modal_div_IMG">
+            <img src="img/CatRoutMob_maxi.jpg" alt="оборудование">
+    </div>
+    
+    
+    <!-- Подложка только одна -->
+    <div id="overlay"></div>
+    <!--Ссылка пустышка для запуска модального окна-->
+    <a id="StartLink_mod" href="#modal1" class="open_modal"></a>
+    
+</body>
+</html>
